@@ -4,7 +4,7 @@
 
 #include "quantum.h"
 #include "split_util.h"
-
+bool is_keyboard_left(void);
 #ifdef SSD1306OLED
 #    include "ssd1306.h"
 #endif
