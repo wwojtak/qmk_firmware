@@ -3,18 +3,14 @@
 #include "crkbd.h"
 
 #include "quantum.h"
-
-#ifdef PROTOCOL_LUFA
-#    include "lufa.h"
-#    include "split_util.h"
-#endif
+#include "split_util.h"
 
 #ifdef SSD1306OLED
 #    include "ssd1306.h"
 #endif
 
 #define has_usb() is_keyboard_master()
-uint8_t is_master;
+extern uint8_t is_master;
 
 // clang-format off
 #define LAYOUT( \
