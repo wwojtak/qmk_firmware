@@ -42,7 +42,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define WS2812_DMA_STREAM STM32_DMA1_STREAM6
 #    define WS2812_DMA_CHANNEL 5
 
-#    define SELECT_SOFT_SERIAL_SPEED 1
+// #    define SELECT_SOFT_SERIAL_SPEED 1
+#    define SERIAL_USART_SPEED 2000000
 #    define SERIAL_USART_DRIVER SD1     // USART driver of TX pin. default: SD1
 #    define SERIAL_USART_TX_PAL_MODE 7  // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 7
 
