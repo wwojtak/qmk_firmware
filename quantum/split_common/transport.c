@@ -111,7 +111,7 @@ void transport_slave(matrix_row_t master_matrix[], matrix_row_t slave_matrix[]) 
     // Copy matrix to I2C buffer
     memcpy((void*)i2c_buffer->smatrix, (void *)slave_matrix, sizeof(i2c_buffer->smatrix));
  #ifdef SPLIT_TRANSPORT_MIRROR
-     memcpy((void*)master_matrix, (void *)i2c_buffer->mmatrix, sizeof(i2c_buffer->mmatrix));
+    memcpy((void*)master_matrix, (void *)i2c_buffer->mmatrix, sizeof(i2c_buffer->mmatrix));
  #endif
 
 // Read Backlight Info
@@ -277,7 +277,7 @@ bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[])
 #    endif
 
     sync_timer_update(timer_read32());
-    serial_ms_buffer.sync_timer = sync_timer_read32();
+    serial_m2s_buffer.sync_timer = sync_timer_read32();
     return true;
 }
 
