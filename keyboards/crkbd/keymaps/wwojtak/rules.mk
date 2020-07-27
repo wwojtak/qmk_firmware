@@ -1,14 +1,20 @@
-RGBLIGHT_ENABLE    = no
-RGB_MATRIX_ENABLE  = WS2812
-NKRO_ENABLE        = yes
-OLED_DRIVER_ENABLE = yes
-TAP_DANCE_ENABLE = no
-EXTRAKEY_ENABLE = yes
+RGBLIGHT_ENABLE    			= no
+RGBLIGHT_ANIMATIONS 		= no
+RGBLIGHT_SPLIT_ENABLE 	= no
 
-BOOTMAGIC_ENABLE           = no  # Virtual DIP switch configuration(+1000)
-MOUSEKEY_ENABLE            = no  # Mouse keys(+4700)
-CONSOLE_ENABLE             = no  # Console for debug(+400)
-COMMAND_ENABLE             = no  # Commands for debug and configuration
-RAW_ENABLE = yes
+RGB_MATRIX_ENABLE  			= WS2812
+RGB_MATRIX_KEYPRESSES 	= no
 
-CFLAGS += -flto
+NKRO_ENABLE        			= yes
+OLED_DRIVER_ENABLE 			= yes
+TAP_DANCE_ENABLE 				= no
+EXTRAKEY_ENABLE 				= yes
+SPLIT_TRANSPORT 				= mirror
+
+BOOTMAGIC_ENABLE        = no
+MOUSEKEY_ENABLE         = no
+CONSOLE_ENABLE          = no
+COMMAND_ENABLE          = no
+RAW_ENABLE 							= yes
+
+CFLAGS 								 += -flto

@@ -63,6 +63,7 @@ void keyboard_task(void);
 void keyboard_set_leds(uint8_t leds);
 /* it runs whenever code has to behave differently on a slave */
 bool is_keyboard_master(void);
+bool is_keyboard_left(void);
 
 void keyboard_pre_init_kb(void);
 void keyboard_pre_init_user(void);
