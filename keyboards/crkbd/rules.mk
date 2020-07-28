@@ -33,6 +33,6 @@ SPLIT_TRANSPORT = mirror
 LIB_SRC += ssd1306.c
 
 # if firmware size over limit, try this option
-LTO_ENABLE = yes
+# LTO_ENABLE = yes
 
 DEFAULT_FOLDER = crkbd/rev1

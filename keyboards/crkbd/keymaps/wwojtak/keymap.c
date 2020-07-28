@@ -1,5 +1,8 @@
 #include QMK_KEYBOARD_H
 
+#define QMK_ESC_OUTPUT F4 // usually COL
+#define QMK_ESC_INPUT D4 // usually ROW
+
 
 #ifdef RGBLIGHT_ENABLE
 //Following line allows macro to read current RGB settings
