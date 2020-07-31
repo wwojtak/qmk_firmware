@@ -119,9 +119,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
         KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                      KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, RGBRST,                       XXXXXXX, QWERTY , DVORAK, XXXXXXX, KC_SLEP,  RESET,\
+      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, RGBRST,                       XXXXXXX, QWERTY , DVORAK, XXXXXXX, KC_SLEP, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, EH_LEFT,                      EH_RGHT, CG_NORM, CG_SWAP, XXXXXXX, XXXXXXX, MCAPS,\
+      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, RESET  ,                      XXXXXXX, CG_NORM, CG_SWAP, XXXXXXX, XXXXXXX, MCAPS,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LCTL,   LOWER, KC_SPC,     KC_ENT, RAISE, KC_LALT \
                                       //`--------------------------'  `--------------------------'
@@ -344,6 +344,11 @@ void read_mode_icon(bool swap) {
 }
 
 void render_status_main(void) {
+    render_space();
+    render_space();
+    oled_write_ln_P(PSTR("CRKBD"), false);
+    render_space();
+    render_space();
     render_space();
     render_space();
     render_space();

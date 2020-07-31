@@ -58,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #undef MANUFACTURER
 #define MANUFACTURER    wwojtak
 #undef PRODUCT
-#define PRODUCT "Wojciech's crkbd"
+#define PRODUCT crkbd
 
 #define OLED_FONT_H "keyboards/crkbd/keymaps/wwojtak/susuwatari.c"
 // #define OLED_FONT_WIDTH 5
