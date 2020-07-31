@@ -1,7 +1,8 @@
 #include QMK_KEYBOARD_H
 
-#define QMK_ESC_OUTPUT F4 // usually COL
-#define QMK_ESC_INPUT D4 // usually ROW
+#define QMK_ESC_OUTPUT F4
+#define QMK_ESC_INPUT D4
+#define QMK_LED B0
 
 
 #ifdef RGBLIGHT_ENABLE
@@ -254,11 +255,11 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
   if (length > 1 && data[1] == 1 && !keymap_config.swap_lctl_lgui) {
       keymap_config.swap_lctl_lgui = true;
   }
-  
+
   if (length > 1 && data[2] == 1 && layer_dvorak) {
       default_layer_set(1UL<<_QWERTY);
       layer_dvorak = false;
-  
+
   } else if (length > 1 && data[2] == 0 && !layer_dvorak) {
       default_layer_set(1UL<<_DVORAK);
       layer_dvorak = true;
@@ -268,7 +269,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
         unregister_code(KC_CAPS);
       }
   }
-  
+
   if (keymap_config.swap_lctl_lgui) {
     data_send[1]=1;
   }
@@ -328,8 +329,8 @@ char mode_icon[24];
 
 void read_mode_icon(bool swap) {
   static const char PROGMEM win_logo[] = {
-        0x20, 0x20, 0x97, 0x98, 0x20, 
-        0x20, 0x20, 0xb7, 0xb8, 0x20, 
+        0x20, 0x20, 0x97, 0x98, 0x20,
+        0x20, 0x20, 0xb7, 0xb8, 0x20,
         0x20, 0x20, 0xd7, 0xd8, 0x20, 0};
   static const char PROGMEM osx_logo[] = {
         0x20, 0x20, 0x95, 0x96, 0x20,
