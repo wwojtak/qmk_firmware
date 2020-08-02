@@ -16,5 +16,3 @@ MOUSEKEY_ENABLE         = no
 CONSOLE_ENABLE          = yes
 COMMAND_ENABLE          = no
 RAW_ENABLE 				= yes
-
-BOOTLOADER				= qmk-dfu
