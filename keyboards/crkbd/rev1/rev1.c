@@ -1,8 +1,12 @@
-#include "crkbd.h"
+#include "rev1.h"
+
+uint8_t is_master;
 
 uint8_t is_master;
 
 #ifdef RGB_MATRIX_ENABLE
+
+// clang-format off
 
   // Logical Layout
   // Columns
@@ -74,10 +78,10 @@ __attribute__((weak))
 void matrix_init_user(void) {}
 
 void matrix_init_kb(void) {
-   is_master = (uint8_t)is_keyboard_master();
+    is_master = (uint8_t)is_keyboard_master();
 
 #if defined(RGB_MATRIX_ENABLE) && !defined(SPLIT_TRANSPORT_MIRROR)
-    if (!isLeftHand) {
+    if (!is_keyboard_left()) {
         g_led_config = (led_config_t){ {
             {  51,  50,  45,  44,  37,  36 },
             {  52,  49,  46,  43,  38,  35 },

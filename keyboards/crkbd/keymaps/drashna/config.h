@@ -29,7 +29,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #undef USE_I2C
 #undef SSD1306OLED
 
-#define USE_SERIAL_PD2
+#ifdef CONVERT_TO_PROTON_C
+#    undef SOFT_SERIAL_PIN
+#    define SOFT_SERIAL_PIN D3
+
+#    undef RGB_DI_PIN
+#    define RGB_DI_PIN D2
+
+#    define WS2812_PWM_DRIVER PWMD1
+#    define WS2812_PWM_CHANNEL 3
+#    define WS2812_PWM_PAL_MODE 6
+#    define WS2812_DMA_STREAM STM32_DMA1_STREAM6
+#    define WS2812_DMA_CHANNEL 5
+
+// #    define SELECT_SOFT_SERIAL_SPEED 1
+#    define SERIAL_USART_SPEED 2000000
+#    define SERIAL_USART_DRIVER SD1     // USART driver of TX pin. default: SD1
+#    define SERIAL_USART_TX_PAL_MODE 7  // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 7
+
+#endif
 
 // #define TAPPING_FORCE_HOLD
 // #define TAPPING_TERM 100
@@ -58,6 +76,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define RGB_MATRIX_SPD_STEP 10
 #endif
 
+
 #ifdef AUDIO_ENABLE
 #    define B6_AUDIO
 #    define NO_MUSIC_MODE
@@ -76,3 +95,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define OLED_DISABLE_TIMEOUT
 #define TAPPING_TERM_PER_KEY
+
+#define BOOTMAGIC_LITE_ROW 0
+#define BOOTMAGIC_LITE_COLUMN 0
+
+#define BOOTMAGIC_LITE_ROW_RIGHT 4
+#define BOOTMAGIC_LITE_COLUMN_RIGHT 0

@@ -49,7 +49,7 @@
 // #   define RGB_MATRIX_MAXIMUM_BRIGHTNESS 200 // limits maximum brightness of LEDs to 200 out of 255. If not defined maximum brightness is set to 255
 // #   define EECONFIG_RGB_MATRIX (uint32_t *)16
 
-#    if defined(__AVR__) && !defined(__AVR_AT90USB1286__)
+#    if defined(__AVR__) && !defined(__AVR_AT90USB1286__) && !defined(KEYBOARD_launchpad)
 #        define DISABLE_RGB_MATRIX_ALPHAS_MODS
 #        define DISABLE_RGB_MATRIX_GRADIENT_UP_DOWN
 #        define DISABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
@@ -63,7 +63,7 @@
 #        define DISABLE_RGB_MATRIX_CYCLE_ALL
 #        define DISABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
 #        define DISABLE_RGB_MATRIX_CYCLE_UP_DOWN
-#        define DISABLE_RGB_MATRIX_CYCLE_OUT_IN
+// #        define DISABLE_RGB_MATRIX_CYCLE_OUT_IN
 // #       define DISABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL
 #        define DISABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
 #        define DISABLE_RGB_MATRIX_DUAL_BEACON
@@ -100,7 +100,7 @@
 
 #ifdef QMK_KEYS_PER_SCAN
 #    undef QMK_KEYS_PER_SCAN
-#    define QMK_KEYS_PER_SCAN 1
+#    define QMK_KEYS_PER_SCAN 2
 #endif  // !QMK_KEYS_PER_SCAN
 
 // this makes it possible to do rolling combos (zx) with keys that
