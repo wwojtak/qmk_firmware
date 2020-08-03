@@ -23,15 +23,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define USE_MATRIX_I2C
 
 /* Select hand configuration */
-#define SPLIT_USB_DETECT
+// #define SPLIT_USB_DETECT
 // #define MASTER_LEFT
 // #define MASTER_RIGHT
 #define EE_HANDS
 
 // #define SSD1306OLED
+#undef USE_I2C
 #undef SSD1306OLED
-
-#define USE_SERIAL_PD2
 
 // space savers
 #define NO_ACTION_MACRO
@@ -45,14 +44,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
-    #define RGBLED_NUM 27
-    #define RGBLIGHT_ANIMATIONS
-    #define RGBLIGHT_SLEEP
-    #define RGBLIGHT_SPLIT
-    #define RGBLIGHT_LIMIT_VAL 120
-    #define RGBLIGHT_HUE_STEP 10
-    #define RGBLIGHT_SAT_STEP 17
-    #define RGBLIGHT_VAL_STEP 17
+#    define RGBLED_NUM 27
+#    define RGBLIGHT_HUE_STEP 8
+#    define RGBLIGHT_SAT_STEP 8
+#    define RGBLIGHT_VAL_STEP 5
+#    define RGBLIGHT_LIMIT_VAL 120
 #endif
 
 #undef MANUFACTURER
