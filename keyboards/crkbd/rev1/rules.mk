@@ -1,1 +1,3 @@
-LAYOUTS = split_3x6_3
+LIB_SRC += ssd1306.c
+
+DEFAULT_FOLDER = crkbd/rev1/legacy
