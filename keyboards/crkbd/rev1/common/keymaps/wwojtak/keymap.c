@@ -18,7 +18,6 @@ static uint32_t oled_timer = 0;
 
 #ifdef RAW_ENABLE
 #include "raw_hid.h"
-bool is_hid_connected = false;
 #endif
 
 bool layer_dvorak = true;
@@ -31,16 +30,16 @@ extern keymap_config_t keymap_config;
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 enum crkbd_layers {
-  _QWERTY,
   _DVORAK,
+  _QWERTY,
   _LOWER,
   _RAISE,
   _ADJUST
 };
 
 enum custom_keycodes {
-  QWERTY = SAFE_RANGE,
-  DVORAK,
+  DVORAK = SAFE_RANGE,
+  QWERTY,
   LOWER,
   RAISE,
   ADJUST,
@@ -64,6 +63,19 @@ enum macro_keycodes {
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+   [_DVORAK] = LAYOUT( \
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+       KC_ESC, KC_QUOT, KC_COMM,  KC_DOT,    KC_P,    KC_Y,                         KC_F,    KC_G,    KC_C,    KC_R,   KC_L,  KC_SLSH,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_BSPC,    KC_A,    KC_O,    KC_E,    KC_U,    KC_I,                         KC_D,    KC_H,    KC_T,    KC_N,   KC_S,  KC_LGUI,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LSFT, KC_SCLN,    KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,   KC_Z,  KC_RSFT,\
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          KC_LCTL,  LOWER, KC_SPC,       KC_ENT, RAISE,  KC_LALT \
+                                      //`--------------------------'  `--------------------------'
+
+  ),
+
   [_QWERTY] = LAYOUT( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,\
@@ -77,26 +89,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   ),
 
-  [_DVORAK] = LAYOUT( \
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC, KC_QUOT, KC_COMM,  KC_DOT,    KC_P,    KC_Y,                         KC_F,    KC_G,    KC_C,    KC_R,   KC_L,  KC_SLSH,\
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_BSPC,    KC_A,    KC_O,    KC_E,    KC_U,    KC_I,                         KC_D,    KC_H,    KC_T,    KC_N,   KC_S,  KC_LGUI,\
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, KC_SCLN,    KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,   KC_Z,  KC_RSFT,\
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LCTL,  LOWER, KC_SPC,       KC_ENT, RAISE,  KC_LALT \
-                                      //`--------------------------'  `--------------------------'
-
-  ),
-
   [_LOWER] = LAYOUT( \
   //,---------------!--------"--------£--------$----- --%-.                    ,------^--------&--------*--------(--------)----------.
        KC_TAB,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_DEL,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_BSPC,    KC_4,    KC_5,    KC_6, KC_MINS, KC_EQL,                      KC_LEFT, KC_DOWN,  KC_UP, KC_RIGHT, XXXXXXX, KC_LCTL,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_7,    KC_8,    KC_9,    KC_0, XXXXXXX,                     KC_MPLY, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX, KC_RSFT,\
+      KC_LSFT,    KC_7,    KC_8,    KC_9,    KC_0, XXXXXXX,                     KC_MPLY, KC_VOLD, KC_VOLU, KC_MPRV, KC_MNXT, KC_RSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   LOWER, KC_SPC,      KC_ENT, RAISE, KC_LALT \
                                       //`--------------------------'  `--------------------------'
@@ -121,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, RGBRST,                       XXXXXXX, QWERTY , DVORAK, XXXXXXX, KC_SLEP, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, RESET  ,                      XXXXXXX, CG_NORM, CG_SWAP, XXXXXXX, XXXXXXX, MCAPS,\
+      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, EEP_RST, RESET  ,                      XXXXXXX, CG_NORM, CG_SWAP, XXXXXXX, XXXXXXX, MCAPS,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LCTL,   LOWER, KC_SPC,     KC_ENT, RAISE, KC_LALT \
                                       //`--------------------------'  `--------------------------'
@@ -166,16 +165,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   switch (keycode) {
-    case QWERTY:
-      if (record->event.pressed) {
-        persistent_default_layer_set(1UL<<_QWERTY);
-        layer_dvorak = false;
-      }
-      return false;
     case DVORAK:
       if (record->event.pressed) {
-        persistent_default_layer_set(1UL<<_DVORAK);
+        default_layer_set(1UL<<_DVORAK);
         layer_dvorak = true;
+      }
+      return false;
+    case QWERTY:
+      if (record->event.pressed) {
+        default_layer_set(1UL<<_QWERTY);
+        layer_dvorak = false;
       }
       return false;
     case LOWER:
@@ -206,8 +205,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case MCAPS:
         if (record->event.pressed) {
           register_code(KC_CAPS);
-          caps_on = !caps_on;
         } else {
+          caps_on = !caps_on;
           unregister_code(KC_CAPS);
         }
         return false;
@@ -234,14 +233,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void suspend_power_down_user(void) {
     rgb_matrix_set_suspend_state(true);
-    rgb_matrix_disable();
     oled_off();
-
 }
 
 void suspend_wakeup_init_user(void) {
     rgb_matrix_set_suspend_state(false);
-    rgb_matrix_enable();
     oled_on();
 }
 
@@ -255,7 +251,6 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
   // data[1] == 1 means it's running on OSX
   data_send[2]=0; // default_layer_set
   // data[2] == 1 means we're using QWERTY layout
-  is_hid_connected = true;
   // Process received data
   if (length > 1 && data[1] == 1 && !keymap_config.swap_lctl_lgui) {
       keymap_config.swap_lctl_lgui = true;
@@ -304,19 +299,19 @@ void render_space(void) {
 void render_layer(void) {
     switch (biton32(layer_state)){
       case _LOWER:
-        oled_write_ln_P(PSTR("LOWER"), false);
+        oled_write_ln_P(PSTR("lower"), false);
         break;
       case _RAISE:
-        oled_write_ln_P(PSTR("RAISE"), false);
+        oled_write_ln_P(PSTR("raise"), false);
         break;
       case _ADJUST:
-        oled_write_ln_P(PSTR("ADJST"), false);
+        oled_write_ln_P(PSTR("adjst"), false);
         break;
       default:
         if (layer_dvorak) {
-          oled_write_ln_P(PSTR("DVORK"), false);
+          oled_write_ln_P(PSTR("dvork"), false);
         } else {
-          oled_write_ln_P(PSTR("QWRTY"), false);
+          oled_write_ln_P(PSTR("qwrty"), false);
         }
       }
 }
@@ -351,7 +346,7 @@ void read_mode_icon(bool swap) {
 void render_status_main(void) {
     render_space();
     render_space();
-    oled_write_ln_P(PSTR("CRKBD"), false);
+    oled_write_ln_P(PSTR("crkbd"), false);
     render_space();
     render_space();
     render_space();
@@ -367,11 +362,15 @@ void render_status_secondary(void) {
 }
 
 void oled_task_user(void) {
-  if (timer_elapsed32(oled_timer) > 300000) {
+  if (timer_elapsed32(oled_timer) > 600000) {
         oled_off();
+        rgb_matrix_disable_noeeprom();
         return;
     }
-    else { oled_on(); }
+    else { 
+      oled_on();
+      rgb_matrix_enable_noeeprom();
+      }
 
     if (is_master) {
         render_status_main();
