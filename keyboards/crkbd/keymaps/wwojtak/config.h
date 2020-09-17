@@ -28,17 +28,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 #define EE_HANDS
 
-#define USE_SERIAL_PD2 
+#undef USE_I2C
+#undef SSD1306OLED
 
-// space savers
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
-
-#define NO_ACTION_TAPPING
-// space savers
-
-// #define TAPPING_FORCE_HOLD
-// #define TAPPING_TERM 200
+#define USE_SERIAL_PD2
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
@@ -54,7 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #undef PRODUCT
 #define PRODUCT crkbd
 
-#define OLED_FONT_H "keyboards/crkbd/rev1/common/keymaps/wwojtak/susuwatari.c"
+#define OLED_FONT_H "keyboards/crkbd/keymaps/wwojtak/susuwatari.c"
 // #define OLED_FONT_WIDTH 5
 // #define OLED_FONT_HEIGHT 7
 
@@ -72,14 +65,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Disable the animations you don't want/need.  You will need to disable a good number of these    *
  * because they take up a lot of space.  Disable until you can successfully compile your firmware. */
-// #   define DISABLE_RGB_MATRIX_ALPHAS_MODS
+#   define DISABLE_RGB_MATRIX_ALPHAS_MODS
 #   define DISABLE_RGB_MATRIX_GRADIENT_UP_DOWN
 #   define DISABLE_RGB_MATRIX_BREATHING
-// #   define DISABLE_RGB_MATRIX_BAND_SAT
+#   define DISABLE_RGB_MATRIX_BAND_SAT
 #   define DISABLE_RGB_MATRIX_BAND_VAL
 #   define DISABLE_RGB_MATRIX_BAND_PINWHEEL_SAT
 #   define DISABLE_RGB_MATRIX_BAND_PINWHEEL_VAL
-// #   define DISABLE_RGB_MATRIX_BAND_SPIRAL_SAT
+#   define DISABLE_RGB_MATRIX_BAND_SPIRAL_SAT
 #   define DISABLE_RGB_MATRIX_BAND_SPIRAL_VAL
 #   define DISABLE_RGB_MATRIX_CYCLE_ALL
 #   define DISABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT

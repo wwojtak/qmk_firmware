@@ -364,12 +364,10 @@ void render_status_secondary(void) {
 void oled_task_user(void) {
   if (timer_elapsed32(oled_timer) > 600000) {
         oled_off();
-        rgb_matrix_disable_noeeprom();
         return;
     }
     else { 
       oled_on();
-      rgb_matrix_enable_noeeprom();
       }
 
     if (is_master) {
