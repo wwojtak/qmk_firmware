@@ -43,7 +43,6 @@ enum custom_keycodes {
   LOWER,
   RAISE,
   ADJUST,
-  BACKLIT,
   RGBRST,
   MCAPS
 };
@@ -205,7 +204,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case MCAPS:
         if (record->event.pressed) {
           register_code(KC_CAPS);
-        } else {
           caps_on = !caps_on;
           unregister_code(KC_CAPS);
         }
@@ -232,12 +230,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef RGB_MATRIX_ENABLE
 
 void suspend_power_down_user(void) {
-    rgb_matrix_set_suspend_state(true);
     oled_off();
 }
 
 void suspend_wakeup_init_user(void) {
-    rgb_matrix_set_suspend_state(false);
     oled_on();
 }
 
