@@ -204,8 +204,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case MCAPS:
         if (record->event.pressed) {
           register_code(KC_CAPS);
-          caps_on = !caps_on;
+        } else {
           unregister_code(KC_CAPS);
+          caps_on = !caps_on;
         }
         return false;
     case RGBRST:
