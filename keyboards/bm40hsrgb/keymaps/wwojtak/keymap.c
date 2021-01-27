@@ -15,12 +15,29 @@
  */
 #include QMK_KEYBOARD_H
 
+
+#ifdef RAW_ENABLE
+#include "raw_hid.h"
+bool is_hid_connected = false;
+extern keymap_config_t keymap_config;
+#endif
+bool layer_dvorak = true;
+bool caps_on = false;
+
 enum layers {
   _DVORAK,
   _QWERTY,
   _LOWER,
   _RAISE,
   _ADJUST
+};
+
+enum keycodes {
+DVORAK = SAFE_RANGE,
+QWERTY,
+LOWER,
+RAISE,
+RGBRST
 };
 
 
@@ -122,6 +139,66 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+        case QWERTY:
+          if (record->event.pressed) {
+            set_single_persistent_default_layer(_QWERTY);
+            layer_dvorak = false;
+          }
+          return false;
+          break;
+        case DVORAK:
+          if (record->event.pressed) {
+            set_single_persistent_default_layer(_DVORAK);
+            layer_dvorak = true;
+          }
+          return false;
+          break;
+      }
+    return true;
+};
+
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
+
+#ifdef RAW_ENABLE
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+  uint8_t data_send[32] = {0};
+  data_send[1]=0; // swap_lctl_lgui
+  // data[1] == 1 means it's running on OSX
+  data_send[2]=0; // default_layer_set
+  // data[2] == 1 means we're using QWERTY layout
+  is_hid_connected = true;
+  // Process received data
+  if (length > 1 && data[1] == 1 && !keymap_config.swap_lctl_lgui) {
+      keymap_config.swap_lctl_lgui = true;
+  }
+
+  if (length > 1 && data[2] == 1 && layer_dvorak) {
+      default_layer_set(1UL<<_QWERTY);
+      layer_dvorak = false;
+
+  } else if (length > 1 && data[2] == 0 && !layer_dvorak) {
+      default_layer_set(1UL<<_DVORAK);
+      layer_dvorak = true;
+      if (caps_on) {
+        register_code(KC_CAPS);
+        caps_on = !caps_on;
+        unregister_code(KC_CAPS);
+      }
+  }
+
+  if (keymap_config.swap_lctl_lgui) {
+    data_send[1]=1;
+  }
+  if (!layer_dvorak) {
+    data_send[2]=1;
+  }
+  // data is sent with additional bit
+  raw_hid_send(data_send, sizeof(data_send));
+
+  return;
+}
+#endif
