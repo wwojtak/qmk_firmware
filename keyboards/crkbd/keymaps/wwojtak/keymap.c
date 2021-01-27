@@ -158,9 +158,9 @@ void keyboard_post_init_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
-    #ifdef OLED_DRIVER_ENABLE
+/*     #ifdef OLED_DRIVER_ENABLE
             oled_timer = timer_read32();
-    #endif
+    #endif */
   }
 
   switch (keycode) {
@@ -230,14 +230,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef RGB_MATRIX_ENABLE
 
-void suspend_power_down_user(void) {
+/* void suspend_power_down_user(void) {
     oled_off();
 }
 
 void suspend_wakeup_init_user(void) {
     oled_on();
 }
-
+ */
 #endif
 
 #ifdef RAW_ENABLE
