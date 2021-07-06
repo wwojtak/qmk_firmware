@@ -97,13 +97,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  [_LOWER] = LAYOUT_planck_mit(
    KC_TAB,   KC_F1,    KC_F2,    KC_F3,    KC_F4,   _______,  _______,  _______,  _______,  _______,  _______, KC_DEL,
    KC_BSPC,  KC_F5,    KC_F6,    KC_F7,    KC_F8,   _______,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RIGHT, _______, _______,
-   _______,  KC_F9,    KC_F10,   KC_F11,   KC_F12,  _______,  KC_MPRV,  KC_VOLD,  KC_VOLU,  KC_MNXT,  KC_MPLY, KC_RSFT,
+   _______,  KC_F9,    KC_F10,   KC_F11,   KC_F12,  _______,  KC_MPRV,  KC_VOLD,  KC_VOLU,  KC_MNXT,  KC_MPLY, _______,
    _______,  KC_LGUI,  KC_LALT,  KC_LCTRL, LOWER,   KC_ENT,             RAISE,    KC_RGUI,  KC_RALT,  _______, _______
  ),
 
  /* Raise
   * ,-----------------------------------------------------------------------------------.
-  * |      |      |      |      |      |      |      |   7  |   8  |   9  |   0  | Del  |
+  * |      |   1  |   2  |   3  |  4   |  5   |  6   |   7  |   8  |   9  |   0  | Del  |
   * |------+------+------+------+------+-------------+------+------+------+------+------|
   * | Bksp |  [   |  ]   |  (   |   )  |      |   *  |   4  |   5  |   6  |   -  | RGUI |
   * |------+------+------+------+------+------|------+------+------+------+------+------|
