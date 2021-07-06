@@ -10,8 +10,6 @@
 extern rgblight_config_t rgblight_config;
 #endif
 
-extern uint8_t is_master;
-
 #ifdef OLED_DRIVER_ENABLE
 static uint32_t oled_timer = 0;
 #endif
@@ -282,10 +280,10 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
 
 #ifdef OLED_DRIVER_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    if (is_master) {
+    if (is_keyboard_master()) {
         return OLED_ROTATION_270;
-    }  else {
-        return OLED_ROTATION_180;
+    } else {
+    return OLED_ROTATION_180;
     }
 }
 
@@ -367,7 +365,7 @@ void oled_task_user(void) {
       oled_on();
       }
 
-    if (is_master) {
+    if (is_keyboard_master()) {
         render_status_main();
     } else {
         render_status_secondary();
