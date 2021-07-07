@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "wwojtak.h"
 
 #define QMK_ESC_OUTPUT F4
 #define QMK_ESC_INPUT D4
@@ -8,10 +9,6 @@
 #ifdef RGBLIGHT_ENABLE
 //Following line allows macro to read current RGB settings
 extern rgblight_config_t rgblight_config;
-#endif
-
-#ifdef OLED_DRIVER_ENABLE
-static uint32_t oled_timer = 0;
 #endif
 
 #ifdef RAW_ENABLE
@@ -49,14 +46,6 @@ enum macro_keycodes {
   KC_SAMPLEMACRO,
 };
 
-// enum {
-//     TD_GUI_CTRL,
-// };
-//
-// qk_tap_dance_action_t tap_dance_actions[] = {
-//     // Tap once for GUI, twice for Ctrl
-//     [TD_GUI_CTRL] = ACTION_TAP_DANCE_DOUBLE(KC_LGUI, KC_LCTL),
-// };
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -155,13 +144,29 @@ void keyboard_post_init_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-    #ifdef OLED_DRIVER_ENABLE
-            oled_timer = timer_read32();
-    #endif
-  }
-
   switch (keycode) {
+    case KC_LCTL:
+#ifdef OCEAN_DREAM_ENABLE
+            is_calm = (record->event.pressed) ? true : false;
+#endif
+#ifdef LUNA_ENABLE
+            if (record->event.pressed) {
+                isSneaking = true;
+            } else {
+                isSneaking = false;
+            }
+#endif
+            break;
+        case KC_SPC:
+#ifdef LUNA_ENABLE
+            if (record->event.pressed) {
+                isJumping  = true;
+                showedJump = false;
+            } else {
+                isJumping = false;
+            }
+#endif
+            break;
     case DVORAK:
       if (record->event.pressed) {
         default_layer_set(1UL<<_DVORAK);
@@ -226,17 +231,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-#ifdef RGB_MATRIX_ENABLE
-
-/* void suspend_power_down_user(void) {
-    oled_off();
-}
-
-void suspend_wakeup_init_user(void) {
-    oled_on();
-}
- */
-#endif
 
 #ifdef RAW_ENABLE
 
@@ -276,100 +270,4 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
 
   return;
 }
-#endif
-
-#ifdef OLED_DRIVER_ENABLE
-oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    if (is_keyboard_master()) {
-        return OLED_ROTATION_270;
-    } else {
-    return OLED_ROTATION_180;
-    }
-}
-
-void render_space(void) {
-    oled_write_P(PSTR("     "), false);
-}
-
-void render_layer(void) {
-    switch (biton32(layer_state)){
-      case _LOWER:
-        oled_write_ln_P(PSTR("lower"), false);
-        break;
-      case _RAISE:
-        oled_write_ln_P(PSTR("raise"), false);
-        break;
-      case _ADJUST:
-        oled_write_ln_P(PSTR("adjst"), false);
-        break;
-      default:
-        if (layer_dvorak) {
-          oled_write_ln_P(PSTR("dvork"), false);
-        } else {
-          oled_write_ln_P(PSTR("qwrty"), false);
-        }
-      }
-}
-
-void susuwatari_logo(void) {
-   static const char PROGMEM suswatari_logo[] = {
-      0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93, 0x94,
-      0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4,
-      0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4,
-      0};
-    oled_write_P(suswatari_logo, false);
-}
-
-char mode_icon[24];
-
-void read_mode_icon(bool swap) {
-  static const char PROGMEM win_logo[] = {
-        0x20, 0x20, 0x97, 0x98, 0x20,
-        0x20, 0x20, 0xb7, 0xb8, 0x20,
-        0x20, 0x20, 0xd7, 0xd8, 0x20, 0};
-  static const char PROGMEM osx_logo[] = {
-        0x20, 0x20, 0x95, 0x96, 0x20,
-        0x20, 0x20, 0xb5, 0xb6, 0x20,
-        0x20, 0x20, 0xd5, 0xd6, 0x20, 0};
-  if (swap) {
-    oled_write_P(osx_logo, false);
-  } else {
-    oled_write_P(win_logo, false);
-  }
-}
-
-void render_status_main(void) {
-    render_space();
-    render_space();
-    oled_write_ln_P(PSTR("crkbd"), false);
-    render_space();
-    render_space();
-    render_space();
-    render_space();
-    render_space();
-    read_mode_icon(keymap_config.swap_lctl_lgui);
-    render_space();
-    render_layer();
-}
-
-void render_status_secondary(void) {
-    susuwatari_logo();
-}
-
-void oled_task_user(void) {
-  if (timer_elapsed32(oled_timer) > 600000) {
-        oled_off();
-        return;
-    }
-    else { 
-      oled_on();
-      }
-
-    if (is_keyboard_master()) {
-        render_status_main();
-    } else {
-        render_status_secondary();
-    }
-}
-
 #endif
