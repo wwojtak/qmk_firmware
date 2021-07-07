@@ -243,6 +243,8 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
   // Process received data
   if (length > 1 && data[1] == 1 && !keymap_config.swap_lctl_lgui) {
       keymap_config.swap_lctl_lgui = true;
+  } else if (length > 1 && data[1] == 0 && keymap_config.swap_lctl_lgui) {
+      keymap_config.swap_lctl_lgui = false;
   }
 
   if (length > 1 && data[2] == 1 && layer_dvorak) {
