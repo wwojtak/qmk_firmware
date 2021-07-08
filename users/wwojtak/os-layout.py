@@ -71,6 +71,7 @@ if __name__ == "__main__":
                 updated = True
         elif (device[0]):
             device[1].close()
+            sleep(2)
         else:
             updated = False
             sleep(2)
