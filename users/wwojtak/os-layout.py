@@ -2,9 +2,6 @@ import hid
 import platform
 from time import sleep
 
-def pad_message(payload):
-    return payload + b'\x00' * (64 - len(payload))
-
 def tobyte(data):
     if type(data) is bytes:
         return data
@@ -32,14 +29,17 @@ for device in devices:
         sleep(0.05)
         if system == "Darwin":
             data = tobytes([0,1,1])
+            print('sent ', int.from_bytes(data, 'big'))
         else:
             data = tobytes([0,1,0])
-        device.write(pad_message(data))
+            print('sent ', int.from_bytes(data, 'big'))
+        device.write(data)
         sleep(0.05)
         ctrlgui = int.from_bytes(device.read(2), 'big')
         if ctrlgui == 0:
             print('{} using default ctrlgui'.format(device.product))
         else:
+            print('received ', ctrlgui)
             print('{} using swapped ctrlgui'.format(device.product))
         device.close()
 
